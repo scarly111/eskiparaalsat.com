@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Banknote {
+  id          Int      @id @default(autoincrement())
+  category    String   // "CUMHURIYET" veya "OSMANLI"
+  title       String
+  nominal     String   // "100 Lira" vs
+  year        Int?
+  emission    String?
+  condition   String?  // "POOR", "GOOD", "UNC" vs string olarak tutacağız
+  price       Int
+  currency    String   @default("TRY")
+  imageUrl    String?
+  description String?
+  createdAt   DateTime @default(now())
+}
