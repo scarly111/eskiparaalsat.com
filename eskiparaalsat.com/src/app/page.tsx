@@ -1,91 +1,79 @@
 // src/app/page.tsx
-import { prisma } from "@/lib/db";
 import Link from "next/link";
+import { prisma } from "@/lib/db";
 import { BanknoteCard } from "@/components/BanknoteCard";
 
 export const dynamic = "force-dynamic";
 
-
 export default async function HomePage() {
   const latest = await prisma.banknote.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 8,
+    orderBy: { id: "desc" },
+    take: 6,
   });
 
+  const hasLatest = latest.length > 0;
+
   return (
-    <div className="space-y-8">
-      {/* HERO */}
-      <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-3">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-slate-50">
-            Eski Para Koleksiyon & Satış
+    <section className="space-y-6 sm:space-y-8 flex flex-col items-center sm:items-stretch">
+      {/* Hero */}
+      <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-3 sm:gap-4">
+        <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-black/40 px-3 py-1 text-[11px] text-zinc-400 shadow-sm shadow-black/40">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          <span>Özenle saklanmış koleksiyon paraları</span>
+        </div>
+
+        <div className="space-y-2 sm:space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-50">
+            Eski Türk Paraları,{" "}
+            <span className="text-zinc-300">tek bir vitrinde.</span>
           </h1>
-          <p className="text-sm text-slate-400 max-w-xl">
-            Cumhuriyet ve Osmanlı dönemine ait kağıt paralar. Satın almak istediğiniz paralar için <span className="text-emerald-400 font-bold">WhatsApp</span>{" "} üzerinden iletişime geçebilirsiniz.
-            
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
+            Cumhuriyet ve Osmanlı dönemine ait kağıt paraları inceleyin,
+            beğendiğiniz parçalar için doğrudan WhatsApp üzerinden iletişime
+            geçin.
           </p>
-          <div className="flex flex-wrap gap-2 pt-1 text-sm">
-            <Link
-              href="/cumhuriyet"
-              className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-100"
-            >
-              Cumhuriyet Paraları
-            </Link>
-            <Link
-              href="/osmanli"
-              className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-100"
-            >
-              Osmanlı Paraları
-            </Link>
-          </div>
         </div>
 
-        <div className="mt-3 sm:mt-0 flex flex-col gap-2 text-xs text-slate-400 sm:text-right">
-          <div className="inline-flex items-center gap-2 bg-slate-900/70 border border-slate-700 rounded-xl px-3 py-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Satın almak için kartlardaki WhatsApp butonunu kullanın.</span>
-          </div>
-          <div>Her ürün birebir fotoğraflıdır ve stok adedi sınırlıdır.</div>
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+          <Link
+            href="/cumhuriyet"
+            className="rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-white"
+          >
+            Cumhuriyet Paraları
+          </Link>
+          <Link
+            href="/osmanli"
+            className="rounded-full border border-zinc-700 bg-black/40 px-4 py-2 text-sm font-medium text-zinc-200 hover:bg-zinc-900"
+          >
+            Osmanlı Paraları
+          </Link>
         </div>
-      </section>
+      </div>
 
-      {/* SON EKLENENLER */}
-      <section className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-100">
+      {/* Son eklenenler */}
+      <div className="w-full max-w-xl sm:max-w-none mx-auto space-y-3 sm:space-y-4">
+        <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-1">
+          <h2 className="text-sm sm:text-base font-medium text-zinc-100">
             Son eklenen paralar
           </h2>
-          <div className="text-[11px] text-slate-500">
-            Tüm liste için{" "}
-            <Link
-              href="/cumhuriyet"
-              className="underline hover:text-emerald-300"
-            >
-              Cumhuriyet
-            </Link>{" "}
-            veya{" "}
-            <Link
-              href="/osmanli"
-              className="underline hover:text-emerald-300"
-            >
-              Osmanlı
-            </Link>{" "}
-            sayfalarını ziyaret edin.
-          </div>
+          <p className="text-[11px] sm:text-xs text-zinc-500">
+            En son eklenen koleksiyon parçalarına hızlı bir bakış.
+          </p>
         </div>
 
-        {latest.length === 0 ? (
-          <div className="text-sm text-slate-500 border border-dashed border-slate-700 rounded-xl px-4 py-6 text-center">
-            Henüz sisteme para eklenmemiş.
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {hasLatest ? (
+          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {latest.map((item) => (
               <BanknoteCard key={item.id} item={item} />
             ))}
           </div>
+        ) : (
+          <p className="text-sm text-zinc-500 text-center sm:text-left">
+            Henüz listelenmiş bir para bulunmuyor. Admin panelinden koleksiyona
+            paralar ekleyebilirsiniz.
+          </p>
         )}
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

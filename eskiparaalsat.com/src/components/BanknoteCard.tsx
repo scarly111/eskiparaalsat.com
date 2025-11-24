@@ -1,18 +1,8 @@
 // src/components/BanknoteCard.tsx
-import { Banknote } from "@prisma/client";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
-import { MessageCircle } from "lucide-react";
 import Link from "next/link";
+import type { Banknote } from "@prisma/client";
+import { MessageCircle } from "lucide-react";
 
-type BanknoteCardProps = {
-  item: Banknote;
-};
-
-function humanCategory(category: string) {
-  return category === "CUMHURIYET" ? "Cumhuriyet" : "Osmanlı";
-}
-
-// DB'deki JSON string'den görsel URL listesi çıkar
 function getImageUrls(raw: string | null | undefined): string[] {
   if (!raw) return [];
   try {
@@ -21,7 +11,6 @@ function getImageUrls(raw: string | null | undefined): string[] {
       return parsed.filter((x): x is string => typeof x === "string");
     }
   } catch {
-    // Eski data tek URL string ise:
     if (typeof raw === "string" && raw.startsWith("http")) {
       return [raw];
     }
@@ -29,64 +18,83 @@ function getImageUrls(raw: string | null | undefined): string[] {
   return [];
 }
 
+function humanCategory(category: string) {
+  return category === "CUMHURIYET" ? "Cumhuriyet" : "Osmanlı";
+}
+
+type BanknoteCardProps = { item: Banknote };
+
 export function BanknoteCard({ item }: BanknoteCardProps) {
-  const images = getImageUrls(item.imageUrl);
-  const cover = images[0];
-
-  const message =
-    `Merhaba, sitenizdeki şu parayla ilgileniyorum:\n\n` +
-    `Kategori: ${humanCategory(item.category)}\n` +
-    `Başlık: ${item.title}\n` +
-    `Fiyat: ${item.price.toLocaleString("tr-TR")} TL\n` +
-    `ID: ${item.id}\n\nBilgi alabilir miyim?`;
-
-  const waLink = buildWhatsAppLink(message);
+  const imageUrls = getImageUrls(item.imageUrl);
+  const cover = imageUrls[0];
 
   return (
-    <div className="bg-slate-900/80 rounded-2xl shadow-md shadow-black/40 border border-slate-800 overflow-hidden flex flex-col hover:border-emerald-500/70 hover:shadow-emerald-900/30 transition">
-      {/* DİKKAT: her zaman ID ile detay sayfasına gidiyoruz */}
-      <Link href={`/p/${item.id}`} className="block">
-        {cover ? (
-          <img
-            src={cover}
-            alt={item.title}
-            className="w-full h-44 object-cover bg-slate-900"
-          />
-        ) : (
-          <div className="w-full h-44 bg-slate-900 flex items-center justify-center text-xs text-slate-500">
-            Fotoğraf bulunmuyor
-          </div>
-        )}
-      </Link>
-
-      <div className="p-3 flex flex-col gap-2 flex-1">
-        <Link href={`/p/${item.id}`} className="block">
-          <div>
-            <h3 className="font-semibold text-sm leading-snug line-clamp-2 hover:text-emerald-300">
-              {item.title}
-            </h3>
-            <p className="text-[11px] text-slate-400 mt-0.5">
-              {humanCategory(item.category)}
-            </p>
-          </div>
-        </Link>
-
-        <div className="mt-1 text-sm font-semibold text-emerald-400">
-          {item.price.toLocaleString("tr-TR")} TL
-        </div>
-
-        <div className="mt-auto flex justify-end pt-2">
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] px-2.5 py-1.5 rounded-full border border-emerald-500/70 text-emerald-300 hover:bg-emerald-500/10"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-            WhatsApp
-          </a>
+    <Link
+      href={`/p/${item.id}`}
+      className="group block rounded-2xl border border-zinc-900 bg-black/70 shadow-[0_16px_40px_rgba(0,0,0,0.7)] transition-transform duration-200 hover:-translate-y-1 hover:border-zinc-700"
+    >
+      {/* Görsel */}
+      <div className="relative overflow-hidden rounded-t-2xl border-b border-zinc-900 bg-zinc-950">
+        <div className="aspect-[16/10] w-full">
+          {cover ? (
+            <img
+              src={cover}
+              alt={item.title}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(250,250,250,0.08),_transparent_55%)] text-[11px] text-zinc-500">
+              Fotoğraf eklenmedi
+            </div>
+          )}
         </div>
       </div>
-    </div>
+
+      {/* İçerik */}
+      <div className="space-y-2 px-3.5 py-3.5">
+        <div className="min-w-0">
+          <h3 className="line-clamp-2 text-sm font-medium text-zinc-50">
+            {item.title}
+          </h3>
+          <p className="mt-0.5 text-[11px] uppercase tracking-[0.16em] text-zinc-500">
+            {humanCategory(item.category)}
+          </p>
+        </div>
+
+        {/* Fiyat + WhatsApp */}
+        <div className="flex items-end justify-between">
+          {/* Fiyat */}
+          <div className="flex flex-col">
+            <span className="text-[11px] text-zinc-500">Fiyat</span>
+            <span className="text-sm font-semibold text-emerald-400">
+              {item.price.toLocaleString("tr-TR")} TL
+            </span>
+          </div>
+
+          {/* WhatsApp button — tam hizalı */}
+          <div className="self-end translate-y-[1px]">
+            <div
+              className="
+                inline-flex items-center gap-1.5
+                rounded-full
+                border border-emerald-500/40
+                bg-emerald-500/10
+                px-2.5 py-[5px]
+                text-[10px]
+                font-medium
+                text-emerald-300
+                transition
+                group-hover:border-emerald-400
+                group-hover:bg-emerald-500/20
+                group-hover:text-emerald-200
+              "
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              WhatsApp
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }

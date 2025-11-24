@@ -11,8 +11,8 @@ export default async function CumhuriyetPage() {
   });
 
   return (
-    <section className="space-y-4 sm:space-y-5">
-      <header className="flex flex-col gap-1">
+    <section className="space-y-4 sm:space-y-5 flex flex-col items-center sm:items-stretch">
+      <header className="flex flex-col gap-1 items-center text-center sm:items-start sm:text-left">
         <h1 className="text-xl sm:text-2xl font-semibold text-zinc-50 tracking-tight">
           Cumhuriyet Paraları
         </h1>
@@ -23,14 +23,16 @@ export default async function CumhuriyetPage() {
       </header>
 
       {items.length === 0 ? (
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-zinc-500 text-center sm:text-left">
           Şu anda listelenen Cumhuriyet parası bulunmuyor.
         </p>
       ) : (
-        <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <BanknoteCard key={item.id} item={item} />
-          ))}
+        <div className="w-full max-w-xl sm:max-w-none mx-auto">
+          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <BanknoteCard key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       )}
     </section>

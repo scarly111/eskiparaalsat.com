@@ -86,7 +86,6 @@ async function updateBanknote(id: number, formData: FormData) {
   const title =
     titleBase.length > 0 ? titleBase.slice(0, 80) : "Açıklamasız para";
 
-  // Mevcut fotoğrafları DB'den çekiyoruz ki üstüne ekleyebilelim
   const existing = await prisma.banknote.findUnique({
     where: { id },
     select: { imageUrl: true },
@@ -102,7 +101,6 @@ async function updateBanknote(id: number, formData: FormData) {
 
   if (hasNewFiles) {
     const uploaded = await uploadImagesToCloudinary(files);
-    // ESKİ + YENİ = BİRLEŞTİR
     finalImageUrls = [...existingUrls, ...uploaded];
   }
 
@@ -114,7 +112,6 @@ async function updateBanknote(id: number, formData: FormData) {
       nominal: "Belirtilmemiş",
       description: description || null,
       price,
-      // yeni foto varsa birleşmiş listeyi yaz, yoksa imageUrl'e dokunma
       ...(finalImageUrls ? { imageUrl: JSON.stringify(finalImageUrls) } : {}),
     },
   });
@@ -171,124 +168,134 @@ export default async function EditBanknotePage(props: {
   }
 
   return (
-    <div className="mt-4 max-w-xl">
-      <h1 className="text-xl font-semibold mb-4 text-slate-50">
-        Para Düzenle (ID: {item.id})
-      </h1>
+    <section className="mt-4 flex flex-col items-center sm:items-stretch">
+      <div className="w-full max-w-xl mx-auto space-y-4">
+        <header className="flex flex-col gap-1 items-center text-center sm:items-start sm:text-left">
+          <h1 className="text-xl font-semibold text-zinc-50">
+            Para Düzenle
+          </h1>
+          <p className="text-xs sm:text-sm text-zinc-400">
+            ID: {item.id} numaralı kaydı güncelleyebilir veya silebilirsiniz.
+          </p>
+        </header>
 
-      <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 shadow-md shadow-black/40 space-y-4">
-        {/* Mevcut fotoğraflar */}
-        {existingImages.length > 0 && (
-          <div className="space-y-2">
-            <div className="text-xs text-slate-400">Mevcut fotoğraflar</div>
-            <div className="flex flex-wrap gap-2">
-              {existingImages.map((url, idx) => (
-                <div
-                  key={idx}
-                  className="w-20 h-20 rounded-lg overflow-hidden border border-slate-700 bg-slate-950"
-                >
-                  <img
-                    src={url}
-                    alt={`Fotoğraf ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+        <div className="space-y-4 rounded-2xl border border-zinc-900 bg-black/70 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.7)]">
+          {/* Mevcut fotoğraflar */}
+          {existingImages.length > 0 && (
+            <div className="space-y-2">
+              <div className="text-xs text-zinc-400 text-center sm:text-left">
+                Mevcut fotoğraflar
+              </div>
+              <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                {existingImages.map((url, idx) => (
+                  <div
+                    key={idx}
+                    className="h-20 w-20 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-950"
+                  >
+                    <img
+                      src={url}
+                      alt={`Fotoğraf ${idx + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-zinc-500 text-center sm:text-left">
+                Yeni fotoğraflar yüklerseniz mevcut fotoğrafların üstüne
+                eklenir.
+              </p>
             </div>
-            <p className="text-[11px] text-slate-500">
-              Yeni fotoğraflar yüklerseniz mevcut fotoğrafların ÜSTÜNE eklenir.
-            </p>
-          </div>
-        )}
+          )}
 
-        {/* GÜNCELLEME FORMU */}
-        <form action={updateAction} className="space-y-4">
-          {/* Kategori */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-200">
-              Kategori
-            </label>
-            <select
-              name="category"
-              className="w-full border border-slate-700 bg-slate-950 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
-              defaultValue={item.category}
-              required
-            >
-              <option value="CUMHURIYET">Cumhuriyet</option>
-              <option value="OSMANLI">Osmanlı</option>
-            </select>
-          </div>
+          {/* Güncelleme formu */}
+          <form action={updateAction} className="space-y-4">
+            {/* Kategori */}
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-zinc-200">
+                Kategori
+              </label>
+              <select
+                name="category"
+                defaultValue={item.category}
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                required
+              >
+                <option value="CUMHURIYET">Cumhuriyet</option>
+                <option value="OSMANLI">Osmanlı</option>
+              </select>
+            </div>
 
-          {/* Açıklama */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-200">
-              Açıklama
-            </label>
-            <textarea
-              name="description"
-              defaultValue={item.description ?? ""}
-              className="w-full border border-slate-700 bg-slate-950 rounded-lg px-3 py-2 text-sm min-h-[100px] focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 text-slate-100"
-            />
-          </div>
+            {/* Açıklama */}
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-zinc-200">
+                Açıklama
+              </label>
+              <textarea
+                name="description"
+                defaultValue={item.description ?? ""}
+                className="min-h-[100px] w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              />
+            </div>
 
-          {/* Fiyat */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-200">
-              Fiyat (TL)
-            </label>
-            <input
-              name="price"
-              type="number"
-              defaultValue={item.price}
-              className="w-full border border-slate-700 bg-slate-950 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 text-slate-100"
-              required
-            />
-          </div>
+            {/* Fiyat */}
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-zinc-200">
+                Fiyat (TL)
+              </label>
+              <input
+                name="price"
+                type="number"
+                defaultValue={item.price}
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                required
+              />
+            </div>
 
-          {/* Yeni fotoğraflar */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-200">
-              Yeni fotoğraflar (isteğe bağlı)
-            </label>
-            <input
-              type="file"
-              name="images"
-              multiple
-              accept="image/*"
-              className="block w-full text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-emerald-600 file:text-white hover:file:bg-emerald-500"
-            />
-            <p className="text-[11px] text-slate-500">
-              Yeni fotoğraf seçmezseniz mevcut fotoğraflar aynı kalır. Seçerseniz,
-              mevcut fotoğrafların üstüne eklenir.
-            </p>
-          </div>
+            {/* Yeni fotoğraflar */}
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-zinc-200">
+                Yeni fotoğraflar (isteğe bağlı)
+              </label>
+              <input
+                type="file"
+                name="images"
+                multiple
+                accept="image/*"
+                className="block w-full text-xs text-zinc-300 file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-600 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-emerald-500"
+              />
+              <p className="text-[11px] text-zinc-500 text-center sm:text-left">
+                Yeni fotoğraf seçmezseniz mevcut fotoğraflar aynı kalır.
+                Seçerseniz mevcutların üstüne eklenir.
+              </p>
+            </div>
 
-          <div className="flex justify-end gap-2 pt-2">
-            <Link
-              href="/admin"
-              className="px-3 py-2 text-sm rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-900"
-            >
-              İptal
-            </Link>
+            <div className="flex flex-wrap justify-center sm:justify-end gap-2 pt-2">
+              <Link
+                href="/admin"
+                className="rounded-full border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-900"
+              >
+                Geri dön
+              </Link>
+              <button
+                type="submit"
+                className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-black hover:bg-emerald-500"
+              >
+                Kaydet
+              </button>
+            </div>
+          </form>
+
+          {/* Silme */}
+          <form action={deleteAction} className="pt-1 flex justify-center sm:justify-end">
             <button
               type="submit"
-              className="px-3 py-2 text-sm rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 font-medium"
+              className="rounded-full border border-red-500/80 px-3 py-2 text-[12px] font-medium text-red-300 hover:bg-red-500/10"
             >
-              Kaydet
+              Bu parayı sil
             </button>
-          </div>
-        </form>
-
-        {/* SİLME FORMU */}
-        <form action={deleteAction} className="pt-1">
-          <button
-            type="submit"
-            className="px-3 py-2 text-xs rounded-lg border border-red-500/80 text-red-300 hover:bg-red-500/10"
-          >
-            Bu Parayı Sil
-          </button>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

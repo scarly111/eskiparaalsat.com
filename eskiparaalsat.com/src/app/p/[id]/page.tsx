@@ -56,22 +56,22 @@ export default async function BanknoteDetailPage(props: {
   const waLink = buildWhatsAppLink(message);
 
   return (
-    <section className="space-y-4 sm:space-y-5">
+    <section className="space-y-4 sm:space-y-5 flex flex-col items-center sm:items-stretch">
       <Link
         href={item.category === "CUMHURIYET" ? "/cumhuriyet" : "/osmanli"}
-        className="text-[11px] text-zinc-500 hover:text-zinc-200 hover:underline"
+        className="text-[11px] text-zinc-500 hover:text-zinc-200 hover:underline text-center sm:text-left"
       >
         ← {humanCategory(item.category)} paralarına dön
       </Link>
 
-      <div className="overflow-hidden rounded-2xl border border-zinc-900 bg-black/60 shadow-[0_18px_60px_rgba(0,0,0,0.7)]">
+      <div className="w-full max-w-xl sm:max-w-2xl mx-auto overflow-hidden rounded-2xl border border-zinc-900 bg-black/60 shadow-[0_18px_60px_rgba(0,0,0,0.7)]">
         {/* Slider */}
         {imageUrls.length > 0 && (
           <ImageCarousel images={imageUrls} altBase={item.title} />
         )}
 
         <div className="space-y-4 p-4 sm:p-5">
-          <div className="space-y-1">
+          <div className="space-y-1 text-center sm:text-left">
             <h1 className="text-lg sm:text-xl font-semibold text-zinc-50 tracking-tight">
               {item.title}
             </h1>
@@ -80,15 +80,15 @@ export default async function BanknoteDetailPage(props: {
             </p>
           </div>
 
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:text-left text-center">
+            <div className="sm:text-left text-center">
               <div className="text-[11px] text-zinc-500">Fiyat</div>
               <div className="text-lg font-semibold text-emerald-400">
                 {item.price.toLocaleString("tr-TR")} TL
               </div>
             </div>
 
-            <div className="pt-1 sm:pt-0">
+            <div className="pt-1 sm:pt-0 flex justify-center sm:justify-end">
               <a
                 href={waLink}
                 target="_blank"

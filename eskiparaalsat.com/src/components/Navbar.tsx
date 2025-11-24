@@ -39,8 +39,9 @@ export function Navbar() {
   const waLink = buildQuickWhatsAppLink();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-900 bg-black/70 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:py-3.5">
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-900 bg-black/70 backdrop-blur-xl">
+      {/* GRID: Sol - Orta - Sağ */}
+      <div className="mx-auto grid max-w-5xl grid-cols-[auto_1fr_auto] items-center px-4 py-3 sm:py-3.5">
         {/* Sol: Logo (her zaman görünecek) */}
         <Link
           href="/"
@@ -59,8 +60,8 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Orta + sağ: Desktop menü */}
-        <div className="hidden flex-1 items-center justify-between pl-4 md:flex">
+        {/* Orta: Desktop menü (ORTADA) */}
+        <div className="hidden justify-self-center md:flex">
           <nav className="flex items-center gap-2 text-[13px]">
             {navItems.map((item) => (
               <Link
@@ -77,8 +78,12 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
+        </div>
 
-          <div className="flex items-center gap-2">
+        {/* Sağ: Desktop CTA + Mobile ikonları (EN SAĞDA) */}
+        <div className="flex items-center justify-end gap-2 justify-self-end">
+          {/* Desktop: WhatsApp + Admin */}
+          <div className="hidden items-center gap-2 md:flex">
             <a
               href={waLink}
               target="_blank"
@@ -100,34 +105,34 @@ export function Navbar() {
               {adminItem.label}
             </Link>
           </div>
-        </div>
 
-        {/* Sağ: Mobile hamburger + hızlı WhatsApp */}
-        <div className="flex items-center gap-1 md:hidden">
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-emerald-500/70 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
-          >
-            <MessageCircle className="h-4 w-4" />
-          </a>
+          {/* Mobile: hızlı WhatsApp + hamburger */}
+          <div className="flex items-center gap-1 md:hidden">
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-emerald-500/70 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+            >
+              <MessageCircle className="h-4 w-4" />
+            </a>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-200 hover:bg-zinc-800"
-            aria-label="Menüyü aç"
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-200 hover:bg-zinc-800"
+              aria-label="Menüyü aç"
+            >
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menü sheet */}
       {open && (
         <div className="border-t border-zinc-900 bg-black/95 md:hidden">
-          <div className="mx-auto max-w-5xl px-4 py-3 space-y-2">
+          <div className="mx-auto max-w-5xl space-y-2 px-4 py-3">
             <nav className="flex flex-col gap-1 text-[14px]">
               {navItems.map((item) => (
                 <Link
