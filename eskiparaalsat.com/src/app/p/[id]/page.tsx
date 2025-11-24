@@ -5,6 +5,9 @@ import { buildWhatsAppLink } from "@/lib/whatsapp";
 import Link from "next/link";
 import { ImageCarousel } from "@/components/ImageCarousel";
 
+export const dynamic = "force-dynamic";
+
+
 function humanCategory(category: string) {
   return category === "CUMHURIYET" ? "Cumhuriyet" : "Osmanlı";
 }

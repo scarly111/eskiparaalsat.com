@@ -2,6 +2,9 @@
 import { prisma } from "@/lib/db";
 import { BanknoteCard } from "@/components/BanknoteCard";
 
+export const dynamic = "force-dynamic";
+
+
 export default async function OsmanliPage() {
   const items = await prisma.banknote.findMany({
     where: { category: "OSMANLI" },

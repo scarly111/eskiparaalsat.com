@@ -3,6 +3,9 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import { BanknoteCard } from "@/components/BanknoteCard";
 
+export const dynamic = "force-dynamic";
+
+
 export default async function HomePage() {
   const latest = await prisma.banknote.findMany({
     orderBy: { createdAt: "desc" },
