@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Banknote" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "category" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "nominal" TEXT NOT NULL,
@@ -11,5 +11,7 @@ CREATE TABLE "Banknote" (
     "currency" TEXT NOT NULL DEFAULT 'TRY',
     "imageUrl" TEXT,
     "description" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Banknote_pkey" PRIMARY KEY ("id")
 );
