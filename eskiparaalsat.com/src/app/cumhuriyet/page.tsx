@@ -17,8 +17,7 @@ export default async function CumhuriyetPage() {
           Cumhuriyet Paraları
         </h1>
         <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
-          Cumhuriyet dönemi kağıt paralar, koleksiyon ve yatırım amaçlı
-          gösterim listesi.
+          Cumhuriyet dönemi kağıt paralar, satın almak istediğiniz paralar için <span className="text-emerald-400 font-bold">WhatsApp</span> üzerinden iletişime geçebilirsiniz.
         </p>
       </header>
 

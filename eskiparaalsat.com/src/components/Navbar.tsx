@@ -13,8 +13,7 @@ const navItems = [
 
 const adminItem = { href: "/admin", label: "Admin" };
 
-// Babanın WhatsApp numarasını buraya TR formatında gir
-const WHATSAPP_PHONE = "+905555555555";
+const WHATSAPP_PHONE = "905468736372";
 
 function buildQuickWhatsAppLink() {
   const text = encodeURIComponent(

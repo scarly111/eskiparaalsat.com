@@ -17,8 +17,7 @@ export default async function OsmanliPage() {
           Osmanlı Paraları
         </h1>
         <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
-          Osmanlı dönemine ait kağıt paralar, koleksiyon amaçlı olarak
-          sergilenmektedir.
+          Osmanlı dönemine ait kağıt paralar, satın almak istediğiniz paralar için <span className="text-emerald-400 font-bold">WhatsApp</span> üzerinden iletişime geçebilirsiniz.
         </p>
       </header>
 

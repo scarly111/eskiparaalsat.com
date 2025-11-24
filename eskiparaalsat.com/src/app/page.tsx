@@ -19,7 +19,7 @@ export default async function HomePage() {
       <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-3 sm:gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-black/40 px-3 py-1 text-[11px] text-zinc-400 shadow-sm shadow-black/40">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          <span>Özenle saklanmış koleksiyon paraları</span>
+          <span>Cumhuriyet & Osmanlı paraları</span>
         </div>
 
         <div className="space-y-2 sm:space-y-3">
@@ -29,7 +29,7 @@ export default async function HomePage() {
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
             Cumhuriyet ve Osmanlı dönemine ait kağıt paraları inceleyin,
-            beğendiğiniz parçalar için doğrudan WhatsApp üzerinden iletişime
+            beğendiğiniz parçalar için doğrudan <span className="text-emerald-400 font-bold">WhatsApp</span> üzerinden iletişime
             geçin.
           </p>
         </div>
@@ -69,8 +69,7 @@ export default async function HomePage() {
           </div>
         ) : (
           <p className="text-sm text-zinc-500 text-center sm:text-left">
-            Henüz listelenmiş bir para bulunmuyor. Admin panelinden koleksiyona
-            paralar ekleyebilirsiniz.
+            Henüz listelenmiş bir para bulunmuyor.
           </p>
         )}
       </div>
