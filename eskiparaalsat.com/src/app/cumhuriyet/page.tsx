@@ -4,37 +4,35 @@ import { BanknoteCard } from "@/components/BanknoteCard";
 
 export const dynamic = "force-dynamic";
 
-
 export default async function CumhuriyetPage() {
   const items = await prisma.banknote.findMany({
     where: { category: "CUMHURIYET" },
-    orderBy: { createdAt: "desc" },
+    orderBy: { id: "desc" },
   });
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-xl font-semibold text-slate-50">
-          Cumhuriyet Dönemi Paraları
+    <section className="space-y-4 sm:space-y-5">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-xl sm:text-2xl font-semibold text-zinc-50 tracking-tight">
+          Cumhuriyet Paraları
         </h1>
-        <p className="text-sm text-slate-400 max-w-2xl">
-          Türkiye Cumhuriyeti dönemine ait kağıt paralar. Koleksiyon
-          ve yatırım amaçlı ürünler, <span className="text-emerald-400 font-bold">WhatsApp</span>{" "} üzerinden detaylı bilgi ve satış
-          imkanıyla listelenmektedir.
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
+          Cumhuriyet dönemi kağıt paralar, koleksiyon ve yatırım amaçlı
+          gösterim listesi.
         </p>
       </header>
 
       {items.length === 0 ? (
-        <div className="text-sm text-slate-500 border border-dashed border-slate-700 rounded-xl px-4 py-6 text-center">
-          Şu anda Cumhuriyet kategorisinde listelenen bir para bulunmuyor.
-        </div>
+        <p className="text-sm text-zinc-500">
+          Şu anda listelenen Cumhuriyet parası bulunmuyor.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <BanknoteCard key={item.id} item={item} />
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }

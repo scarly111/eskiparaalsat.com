@@ -1,14 +1,11 @@
 // src/app/layout.tsx
-import "./globals.css";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
-import { MessageCircle } from "lucide-react";
+import "./globals.css";
+import { Navbar } from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Eski Para Al Sat",
-  description:
-    "Cumhuriyet ve Osmanlı dönemine ait eski paralar. Koleksiyon ve yatırım amaçlı satış.",
+  description: "Cumhuriyet ve Osmanlı kağıt paraları koleksiyonu",
 };
 
 export default function RootLayout({
@@ -16,105 +13,32 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Genel iletişim için kullanılacak mesaj
-  const genericMessage =
-    "Merhaba, sitenizdeki eski paralar hakkında genel bilgi almak istiyorum.";
-  const globalWhatsAppLink = buildWhatsAppLink(genericMessage);
-
   return (
     <html lang="tr">
-      <body className="min-h-screen bg-slate-950 text-slate-100 antialiased">
-        <div className="min-h-screen flex flex-col">
-          {/* HEADER */}
-          <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
-            <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-              <Link href="/" className="flex items-center gap-2 group">
-                <div className="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center">
-                  <span className="text-lg font-semibold text-emerald-400">
-                    ₺
-                  </span>
-                </div>
-                <div>
-                  <div className="text-sm font-semibold tracking-wide group-hover:text-emerald-300">
-                    Eski Para Al Sat
-                  </div>
-                  <div className="text-[11px] text-slate-400">
-                    Cumhuriyet & Osmanlı koleksiyon paraları
-                  </div>
-                </div>
-              </Link>
+      <body className="min-h-screen bg-[#02030a] text-slate-100 antialiased">
+        {/* Arka plan glow */}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(16,185,129,0.10),_transparent_55%)]" />
+        </div>
 
-              <nav className="flex items-center gap-3 text-sm">
-                <Link
-                  href="/"
-                  className="px-2 py-1 rounded-lg hover:bg-slate-900 text-slate-200"
-                >
-                  Tüm Paralar
-                </Link>
-                <Link
-                  href="/cumhuriyet"
-                  className="px-2 py-1 rounded-lg hover:bg-slate-900 text-slate-200"
-                >
-                  Cumhuriyet
-                </Link>
-                <Link
-                  href="/osmanli"
-                  className="px-2 py-1 rounded-lg hover:bg-slate-900 text-slate-200"
-                >
-                  Osmanlı
-                </Link>
-                <Link
-                  href="/admin/login"
-                  className="ml-2 text-xs px-3 py-1 rounded-full border border-slate-700 text-slate-400 hover:border-emerald-500 hover:text-emerald-400"
-                >
-                  Admin
-                </Link>
-              </nav>
-            </div>
-          </header>
+        <div className="flex min-h-screen flex-col">
+          <Navbar />
 
-          {/* MAIN */}
           <main className="flex-1">
-            <div className="max-w-6xl mx-auto px-4 py-6">
-              <div className="rounded-2xl bg-slate-950/60 border border-slate-800 shadow-[0_18px_45px_rgba(0,0,0,0.6)] p-4 sm:p-6 lg:p-8">
-                {children}
-              </div>
+            <div className="mx-auto w-full max-w-5xl px-4 pb-10 pt-6 sm:pt-8">
+              {children}
             </div>
           </main>
 
-          {/* FOOTER */}
-          <footer className="border-t border-slate-800 bg-slate-950/90">
-            <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
-              <div>
-                © {new Date().getFullYear()} Eski Para Al Sat — Tüm hakları
-                saklıdır.
-              </div>
-              <div className="text-[11px] text-slate-500">
-                Satın almak için ilginizi çeken paranın kartındaki{" "}
-                <span className="text-emerald-400 font-medium">WhatsApp</span>{" "}
-                butonunu veya sağ alttaki genel{" "}
-                <span className="text-emerald-400 font-medium">WhatsApp</span>{" "}
-                butonunu kullanarak iletişim kurabilirsiniz.
-              </div>
+          <footer className="border-t border-zinc-900 bg-black/40">
+            <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-[11px] text-zinc-500">
+              <span>© {new Date().getFullYear()} Eski Para Al Sat</span>
+              <span className="hidden sm:inline">
+                Koleksiyon amaçlıdır. İletişim yalnızca WhatsApp üzerinden.
+              </span>
             </div>
           </footer>
         </div>
-
-             {/* SAĞ ALTA GENEL WHATSAPP BUTONU (YUVARLAK, SADECE İKON) */}
-        <a
-          href={globalWhatsAppLink}
-          target="_blank"
-          rel="noreferrer"
-          className="fixed z-40 bottom-20 right-4 sm:bottom-6 sm:right-6
-                     h-12 w-12 rounded-full bg-emerald-600 text-white
-                     flex items-center justify-center
-                     shadow-lg shadow-emerald-900/60
-                     hover:bg-emerald-500 transition"
-          aria-label="WhatsApp ile iletişime geç"
-        >
-          <MessageCircle className="w-6 h-6" />
-        </a>
-
       </body>
     </html>
   );

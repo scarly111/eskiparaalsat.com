@@ -4,37 +4,35 @@ import { BanknoteCard } from "@/components/BanknoteCard";
 
 export const dynamic = "force-dynamic";
 
-
 export default async function OsmanliPage() {
   const items = await prisma.banknote.findMany({
     where: { category: "OSMANLI" },
-    orderBy: { createdAt: "desc" },
+    orderBy: { id: "desc" },
   });
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-xl font-semibold text-slate-50">
-          Osmanlı Dönemi Paraları
+    <section className="space-y-4 sm:space-y-5">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-xl sm:text-2xl font-semibold text-zinc-50 tracking-tight">
+          Osmanlı Paraları
         </h1>
-        <p className="text-sm text-slate-400 max-w-2xl">
-          Osmanlı İmparatorluğu dönemine ait nadir ve koleksiyonluk paralar.
-          Detaylı bilgi ve satın alma için kartlar üzerindeki <span className="text-emerald-400 font-bold">WhatsApp</span>{" "} butonunu
-          kullanabilirsiniz.
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
+          Osmanlı dönemine ait kağıt paralar, koleksiyon amaçlı olarak
+          sergilenmektedir.
         </p>
       </header>
 
       {items.length === 0 ? (
-        <div className="text-sm text-slate-500 border border-dashed border-slate-700 rounded-xl px-4 py-6 text-center">
-          Şu anda Osmanlı kategorisinde listelenen bir para bulunmuyor.
-        </div>
+        <p className="text-sm text-zinc-500">
+          Şu anda listelenen Osmanlı parası bulunmuyor.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <BanknoteCard key={item.id} item={item} />
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
