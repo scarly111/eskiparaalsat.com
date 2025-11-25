@@ -108,7 +108,7 @@ export function BanknoteCard({ item }: BanknoteCardProps) {
 
       {/* Orta alan: Detay sayfasına tıklanan yer */}
       <Link href={`/p/${item.id}`}>
-        <div className="space-y-2 px-3.5 pt-3.5 pb-2">
+        <div className="space-y-1 px-3.5 pt-3.5">
           <h3 className="line-clamp-2 text-sm font-medium text-zinc-50">
             {item.title}
           </h3>
