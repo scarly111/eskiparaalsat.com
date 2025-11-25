@@ -19,7 +19,7 @@ export default async function HomePage() {
       <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-3 sm:gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-black/40 px-3 py-1 text-[11px] text-zinc-400 shadow-sm shadow-black/40">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          <span>Eski Para Al & Sat</span>
+          <span>Eski Para Al & Sat - UĞUR & TOLGA</span>
         </div>
 
         <div className="space-y-2 sm:space-y-3">
