@@ -49,12 +49,12 @@ export function Navbar() {
           className="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-white/5"
         >
           {/* Yeni logo: /public/logo.png koyarsan buradan gelir */}
-          <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-zinc-600 bg-zinc-900">
+          <div className="flex items-center justify-center overflow-hidden">
             <Image
               src="/logo.png" // kendi logonu buraya koy
               alt="Eski Para Al Sat"
-              width={72}
-              height={72}
+              width={64}
+              height={64}
               className="object-cover"
             />
           </div>
@@ -116,23 +116,23 @@ export function Navbar() {
           </div>
 
           {/* Mobile: hızlı WhatsApp + hamburger */}
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
             <a
               href={waLink}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-emerald-500/70 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-500/70 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-5 w-5" />
             </a>
 
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-200 hover:bg-zinc-800"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/80 text-zinc-200 hover:bg-zinc-800"
               aria-label="Menüyü aç"
             >
-              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>

@@ -14,16 +14,16 @@ export default async function HomePage() {
   const hasLatest = latest.length > 0;
 
   return (
-    <section className="space-y-6 sm:space-y-8 flex flex-col items-center sm:items-stretch">
+    <section className="space-y-3 sm:space-y-8 flex flex-col items-center sm:items-stretch p-0">
       {/* Hero */}
-      <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-3 sm:gap-4">
+      <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-2 sm:gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-black/40 px-3 py-1 text-[11px] text-zinc-400 shadow-sm shadow-black/40">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           <span>Eski Para Al & Sat - UĞUR & TOLGA</span>
         </div>
 
         <div className="space-y-2 sm:space-y-3">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-50">
+          <h1 className="text-xl sm:text-3xl font-semibold tracking-tight text-zinc-50">
             TÜRKİYE CUMHURİYETİ 1–5 EMİSYON PARALARI (1927–1979) AL & SAT
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
@@ -53,9 +53,6 @@ export default async function HomePage() {
           <h2 className="text-sm sm:text-base font-medium text-zinc-100">
             Son eklenen paralar
           </h2>
-          <p className="text-[11px] sm:text-xs text-zinc-500">
-            En son eklenen koleksiyon parçalarına hızlı bir bakış.
-          </p>
         </div>
 
         {hasLatest ? (
