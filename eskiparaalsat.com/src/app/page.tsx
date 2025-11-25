@@ -19,18 +19,15 @@ export default async function HomePage() {
       <div className="flex flex-col items-center text-center sm:items-start sm:text-left gap-3 sm:gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-black/40 px-3 py-1 text-[11px] text-zinc-400 shadow-sm shadow-black/40">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          <span>Cumhuriyet & Osmanlı paraları</span>
+          <span>Eski Para Al & Sat</span>
         </div>
 
         <div className="space-y-2 sm:space-y-3">
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-50">
-            Eski Türk Paraları,{" "}
-            <span className="text-zinc-300">tek bir vitrinde.</span>
+            TÜRKİYE CUMHURİYETİ 1–5 EMİSYON PARALARI (1927–1979) AL & SAT
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 max-w-prose">
-            Cumhuriyet ve Osmanlı dönemine ait kağıt paraları inceleyin,
-            beğendiğiniz parçalar için doğrudan <span className="text-emerald-400 font-bold">WhatsApp</span> üzerinden iletişime
-            geçin.
+            İlanda beğendiğiniz paralar ve satmak istediğiniz sadece 1-5 Emisyon kâğıt paralar için <span className="text-emerald-400 font-bold">WhatsApp</span> üzerinden iletişime geçiniz.
           </p>
         </div>
 
